@@ -26,9 +26,25 @@ class _ExpensesState extends State<Expenses> {
         category: Categories.food),
   ];
 
+  void _openAdd() {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => Text('modal sheet'),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Expense Tracker'),
+        actions: [
+          IconButton(
+            onPressed: _openAdd,
+            icon: Icon(Icons.add),
+          ),
+        ],
+      ),
       body: Column(
         children: [
           Text('chart'),
