@@ -28,6 +28,30 @@ class NewExpenseState extends State<NewExpense> {
     });
   }
 
+  void _submit() {
+    var enteredAmount = double.tryParse(_amountController.text);
+    if (_titleController.text.trim().isEmpty ||
+        enteredAmount == null ||
+        enteredAmount <= 0 ||
+        _selectedDate == null) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: Text('invalid data'),
+          content: Text('one or more fields are incorrect'),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.pop(ctx);
+                },
+                child: Text('close'))
+          ],
+        ),
+      );
+      return;
+    }
+  }
+
   @override
   void dispose() {
     _titleController.dispose();
@@ -109,13 +133,7 @@ class NewExpenseState extends State<NewExpense> {
                 child: Text('Cancel'),
               ),
               ElevatedButton(
-                onPressed: () {
-                  print(_titleController.text);
-                  print(_amountController.text);
-                  print(_selectedDate == null
-                      ? 'no date'
-                      : formatter.format(_selectedDate!));
-                },
+                onPressed: _submit,
                 child: Text('Save Expense'),
               ),
             ],
